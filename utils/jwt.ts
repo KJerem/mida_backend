@@ -1,5 +1,5 @@
 require("dotenv").config();
-import { Response } from "express";
+import { Request, Response } from "express";
 import { IUser } from "../models/user.model";
 import { redis } from "./redis";
 
@@ -11,7 +11,11 @@ interface ITokenOptions {
   secure?: boolean;
 }
 
-export const sendToken = (user: IUser, statusCode: number, res: Response) => {
+export const sendToken = (
+  user: IUser,
+  statusCode: number,
+  res: Response
+) => {
   const accessToken = user.SignAccessToken();
   const refreshToken = user.SignRefreshToken();
 
@@ -50,6 +54,8 @@ export const sendToken = (user: IUser, statusCode: number, res: Response) => {
 
   res.cookie("access_token", accessToken, accessTokenOptions);
   res.cookie("refresh_token", refreshToken, refreshTokenOptions);
+
+  // console.log(req.cookies.refresh_token);
 
   res.status(statusCode).json({
     success: true,

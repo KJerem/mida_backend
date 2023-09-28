@@ -8,15 +8,9 @@ import path from "path";
 import sendMail from "../utils/sendMail";
 import { sendToken } from "../utils/jwt";
 import { redis } from "../utils/redis";
+import { IActivationRequest, IActivationToken, ILoginRequest, IRegistrationBody } from "./dto";
 require("dotenv").config();
 
-//register user
-interface IRegistrationBody {
-  name: string;
-  email: string;
-  password: string;
-  avatar?: string;
-}
 
 export const registrationUser = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -66,12 +60,6 @@ export const registrationUser = CatchAsyncError(
   }
 );
 
-//token
-interface IActivationToken {
-  token: string;
-  activationCode: string;
-}
-
 export const createActivationToken = (user: any): IActivationToken => {
   const activationCode = Math.floor(1000 + Math.random() * 9000).toString();
 
@@ -87,11 +75,6 @@ export const createActivationToken = (user: any): IActivationToken => {
   return { token, activationCode };
 };
 
-//activate user
-interface IActivationRequest {
-  activation_token: string;
-  activation_code: string;
-}
 
 export const activateUser = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -131,11 +114,6 @@ export const activateUser = CatchAsyncError(
   }
 );
 
-// login user
-interface ILoginRequest {
-  email: string;
-  password: string;
-}
 
 export const loginUser = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -165,7 +143,6 @@ export const loginUser = CatchAsyncError(
   }
 );
 
-// logout user
 export const logoutUser = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {

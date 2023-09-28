@@ -4,7 +4,6 @@ export const app = express();
 
 import cors from "cors";
 import coockieParser from "cookie-parser";
-import { ErrorMiddleware } from "./middleware/error";
 import userRouter from "./routes/user.route";
 //body parser
 app.use(express.json({ limit: "50mb" }));
