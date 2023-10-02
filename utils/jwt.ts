@@ -48,7 +48,7 @@ export const sendToken = (
   };
 
   //only set secure to true in production
-  if (process.env.NODE_ENV !== "production") {
+  if (process.env.NODE_ENV === "production") {
     accessTokenOptions.secure = true;
   }
 
